@@ -47,6 +47,22 @@ var (
 	CompletionCodeCatastrophicError = 16
 )
 
+// ParseCCode parses the summary output from an IBM Connect:Direct "select statistics" command into structured SummaryStats.
+//
+// It processes the input string, identifying lines after a hyphen separator (------) and before an equals separator (======),
+// parsing each valid line into a SummaryStat. Lines are expected in formats like:
+//
+//	E SUBP  02/03/2026 23:28:45 Submit command issued.
+//	P PSTR  02/03/2026 23:28:45 sample            14                0      XSMG200I
+//
+// The function handles special cases for submit processes (SUBP) and general records using LookupRecordID.
+// Dates are parsed in the format "01/02/2006 15:04:05".
+//
+// Statistics can be viewed in Connect:Direct with commands like:
+//
+//	sel stat ccode(ge,0) pnumber=18;
+//
+// If the input is malformed (e.g., invalid date, insufficient columns, or unparseable codes), an error is returned.
 func ParseCCode(input string) (SummaryStats, error) {
 	var out SummaryStats
 
