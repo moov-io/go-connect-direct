@@ -11,11 +11,13 @@ type SummaryStats struct {
 	Stats []SummaryStat
 }
 
-func (ss SummaryStats) ByCode(code int) []SummaryStat {
+func (ss SummaryStats) ByCodes(codes ...int) []SummaryStat {
 	var out []SummaryStat
 	for i := range ss.Stats {
-		if ss.Stats[i].Code == code {
-			out = append(out, ss.Stats[i])
+		for _, c := range codes {
+			if ss.Stats[i].Code == c {
+				out = append(out, ss.Stats[i])
+			}
 		}
 	}
 	return out

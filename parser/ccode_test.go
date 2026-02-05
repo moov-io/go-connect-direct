@@ -125,17 +125,21 @@ func TestParseCCode_ByCode(t *testing.T) {
 			got, err := parser.ParseCCode(string(bs))
 			require.NoError(t, err)
 
-			filtered := got.ByCode(parser.CompletionCodeSuccess)
+			filtered := got.ByCodes(parser.CompletionCodeSuccess)
 			require.Equal(t, tc.successful, len(filtered))
 
-			filtered = got.ByCode(parser.CompletionCodeWarning)
+			filtered = got.ByCodes(parser.CompletionCodeWarning)
 			require.Equal(t, tc.warnings, len(filtered))
 
-			filtered = got.ByCode(parser.CompletionCodeError)
+			filtered = got.ByCodes(parser.CompletionCodeError)
 			require.Equal(t, tc.errors, len(filtered))
 
-			filtered = got.ByCode(parser.CompletionCodeCatastrophicError)
+			filtered = got.ByCodes(parser.CompletionCodeCatastrophicError)
 			require.Equal(t, tc.catastrophic, len(filtered))
+
+			// combine errors and catastrophic
+			filtered = got.ByCodes(parser.CompletionCodeWarning, parser.CompletionCodeError, parser.CompletionCodeCatastrophicError)
+			require.Equal(t, tc.warnings+tc.errors+tc.catastrophic, len(filtered))
 		})
 	}
 }
