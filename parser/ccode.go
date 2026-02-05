@@ -13,10 +13,14 @@ type SummaryStats struct {
 
 func (ss SummaryStats) ByCodes(codes ...int) []SummaryStat {
 	var out []SummaryStat
-	for i := range ss.Stats {
+	for _, stat := range ss.Stats {
+		if stat.Type != "P" {
+			continue
+		}
+
 		for _, c := range codes {
-			if ss.Stats[i].Code == c {
-				out = append(out, ss.Stats[i])
+			if stat.Code == c {
+				out = append(out, stat)
 			}
 		}
 	}
@@ -24,6 +28,13 @@ func (ss SummaryStats) ByCodes(codes ...int) []SummaryStat {
 }
 
 type SummaryStat struct {
+	// Type is the record type
+	//
+	// P: Process records (related to process activities, e.g., CAPR category)
+	// E: Event records (related to system events, e.g., CAEV category). Note that these are not necessarily errors—many are informational or lifecycle events (e.g., process started or session ended).
+	// X: External records (related to external component statistics, e.g., CAEX category, such as stats from an Integrated File Agent).
+	Type string
+
 	ID            RecordID
 	Date          time.Time
 	Description   string
@@ -107,6 +118,7 @@ func ParseCCode(input string) (SummaryStats, error) {
 
 			// Parse a submit process line
 			rec := SummaryStat{
+				Type:        cols[0],
 				ID:          SubmitProcess,
 				Description: strings.Join(cols[4:], " "),
 			}
@@ -117,57 +129,141 @@ func ParseCCode(input string) (SummaryStats, error) {
 			out.Stats = append(out.Stats, rec)
 
 		default:
-			// Parse a line which looks like
-			//   P PSTR  02/03/2026 23:28:45 sample            14                0      XSMG200I
-			if len(cols) < 8 {
-				continue
-			}
+			// Parse a line which looks like:
+			// P RECID LOG TIME            PNAME        PNUMBER  STEPNAME   CCOD FDBK MSGID
+			// E RECID LOG TIME            MESSAGE TEXT
+			// X RECID LOG TIME            APP DESC     USID     NODENAME   CCOD MSGID
 
-			// Parse an update line
-			ccode := LookupRecordID(cols[1])
-			if ccode == nil {
-				continue
-			}
-
-			rec := SummaryStat{
-				ID: *ccode,
-			}
-			rec.Date, err = parseSummaryDate(cols[2:4])
-			if err != nil {
-				return out, fmt.Errorf("parsing %s date: %v", rec.ID, err)
-			}
-			// Start adding columns right to left
-			idx := len(cols) - 1
-			if len(cols) > idx {
-				rec.MessageID = cols[idx]
-			}
-			idx--
-			if len(cols) > idx {
-				cc, err := strconv.ParseInt(cols[idx], 10, 16)
+			switch cols[0] {
+			case "P": // process
+				rec, err := parseSummaryProcessRecord(cols)
 				if err != nil {
-					return out, err
+					return out, fmt.Errorf("parsing process record: %v", err)
 				}
-				rec.Code = int(cc)
-			}
-			idx--
+				if rec != nil {
+					out.Stats = append(out.Stats, *rec)
+				}
 
-			if len(cols) > 8 {
-				idx-- // skip NODENAME
+			case "E": // error
+				rec, err := parseSummaryErrorRecord(cols)
+				if err != nil {
+					return out, fmt.Errorf("parsing error record: %v", err)
+				}
+				if rec != nil {
+					out.Stats = append(out.Stats, *rec)
+				}
+
+			case "X": // xtra records
+				rec, err := parseSummaryExtraRecord(cols)
+				if err != nil {
+					return out, fmt.Errorf("parsing extra record: %v", err)
+				}
+				if rec != nil {
+					out.Stats = append(out.Stats, *rec)
+				}
+
 			}
 
-			if len(cols) > idx {
-				rec.ProcessNumber = cols[idx]
-			}
-
-			if len(cols) > idx {
-				rec.Description = strings.Join(cols[4:idx], " ")
-			}
-
-			out.Stats = append(out.Stats, rec)
 		}
 	}
 
 	return out, nil
+}
+
+func parseSummaryProcessRecord(cols []string) (*SummaryStat, error) {
+	// example records
+	//
+	//   P PSTR  02/03/2026 23:28:45 sample            14                0      XSMG200I
+	//
+	//   P XIPT  02/05/2026 22:45:40 SENDFILE          21                8      XIPT004I
+
+	rec := &SummaryStat{}
+
+	if len(cols) < 8 {
+		return nil, nil
+	}
+	rec.Type = cols[0]
+
+	ccode := LookupRecordID(cols[1])
+	if ccode == nil {
+		ccode = &RecordID{
+			ID: strings.ToUpper(cols[1]),
+		}
+	}
+	rec.ID = *ccode
+
+	date, err := parseSummaryDate(cols[2:4])
+	if err != nil {
+		return rec, fmt.Errorf("parsing %s date: %v", rec.ID, err)
+	}
+	rec.Date = date
+
+	// Start adding columns right to left
+	idx := len(cols) - 1
+	if len(cols) > idx {
+		rec.MessageID = cols[idx]
+	}
+	idx--
+
+	if len(cols) > idx {
+		cc, err := strconv.ParseInt(cols[idx], 10, 16)
+		if err != nil {
+			return rec, err
+		}
+		rec.Code = int(cc)
+	}
+	idx--
+
+	if len(cols) > 8 {
+		idx-- // skip NODENAME
+	}
+
+	if len(cols) > idx {
+		rec.ProcessNumber = cols[idx]
+	}
+
+	if len(cols) > idx {
+		rec.Description = strings.Join(cols[4:idx], " ")
+	}
+
+	return rec, nil
+}
+
+func parseSummaryErrorRecord(cols []string) (*SummaryStat, error) {
+	// example records
+	//
+	//    E RNCF  02/05/2026 22:45:40 Attempt to connect to remote node frbpajcd02 failed
+
+	rec := &SummaryStat{}
+
+	if len(cols) < 4 {
+		return nil, nil
+	}
+	rec.Type = cols[0]
+
+	ccode := LookupRecordID(cols[1])
+	if ccode == nil {
+		ccode = &RecordID{
+			ID: strings.ToUpper(cols[1]),
+		}
+	}
+	rec.ID = *ccode
+
+	date, err := parseSummaryDate(cols[2:4])
+	if err != nil {
+		return rec, fmt.Errorf("parsing %s date: %v", rec.ID, err)
+	}
+	rec.Date = date
+
+	if len(cols) > 4 {
+		rec.Description = strings.Join(cols[4:], " ")
+	}
+
+	return rec, nil
+}
+
+func parseSummaryExtraRecord(cols []string) (*SummaryStat, error) {
+	return nil, nil // TODO(adam):
 }
 
 func parseSummaryDate(fields []string) (time.Time, error) {

@@ -1,0 +1,33 @@
+Direct> sel stat ccode(ge,0) pnumber=21;
+===============================================================================
+                           SELECT  STATISTICS
+===============================================================================
+P RECID LOG TIME            PNAME        PNUMBER  STEPNAME   CCOD FDBK MSGID
+E RECID LOG TIME            MESSAGE TEXT
+X RECID LOG TIME            APP DESC     USID     NODENAME   CCOD MSGID
+-------------------------------------------------------------------------------
+P XIPT  02/05/2026 22:45:40 SENDFILE          21                8      XIPT004I
+
+E RNCF  02/05/2026 22:45:40 Attempt to connect to remote node frbpajcd02 failed
+                            . FRWL=N
+P XIPT  02/05/2026 22:46:10 SENDFILE          21                8      XIPT004I
+E RNCF  02/05/2026 22:46:10 Attempt to connect to remote node frbpajcd02 failed
+                            . FRWL=N
+P XIPT  02/05/2026 22:46:40 SENDFILE          21                8      XIPT004I
+E RNCF  02/05/2026 22:46:40 Attempt to connect to remote node frbpajcd02 failed
+                            . FRWL=N
+P XIPT  02/05/2026 22:47:10 SENDFILE          21                8      XIPT004I
+E RNCF  02/05/2026 22:47:10 Attempt to connect to remote node frbpajcd02 failed
+                            . FRWL=N
+E SUBP  02/05/2026 22:50:40 Submit command issued.
+P XIPT  02/05/2026 22:57:10 SENDFILE          21                8      XIPT004I
+E RNCF  02/05/2026 22:57:10 Attempt to connect to remote node frbpajcd02 failed
+                            . FRWL=N
+P XIPT  02/05/2026 23:07:11 SENDFILE          21                8      XIPT004I
+E RNCF  02/05/2026 23:07:11 Attempt to connect to remote node frbpajcd02 failed
+                            . FRWL=N
+P XIPT  02/05/2026 23:17:11 SENDFILE          21                8      XIPT004I
+E RNCF  02/05/2026 23:17:11 Attempt to connect to remote node frbpajcd02 failed
+                            . FRWL=N
+===============================================================================
+Select Statistics Completed Successfully.

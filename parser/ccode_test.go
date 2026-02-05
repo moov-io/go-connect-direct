@@ -21,11 +21,13 @@ func TestParseCCode(t *testing.T) {
 			inputFilepath: filepath.Join("testdata", "ccode_stats.txt"),
 			expected: []parser.SummaryStat{
 				{
+					Type:        "E",
 					ID:          parser.SubmitProcess,
 					Date:        time.Date(2026, time.February, 3, 23, 28, 45, 0, time.UTC),
 					Description: "Submit command issued.",
 				},
 				{
+					Type:          "P",
 					ID:            parser.ProcessStarted,
 					Date:          time.Date(2026, time.February, 3, 23, 28, 45, 0, time.UTC),
 					Description:   "sample",
@@ -34,6 +36,7 @@ func TestParseCCode(t *testing.T) {
 					MessageID:     "XSMG200I",
 				},
 				{
+					Type:          "P",
 					ID:            parser.ProcessStarted,
 					Date:          time.Date(2026, time.February, 3, 23, 28, 45, 0, time.UTC),
 					Description:   "sample",
@@ -42,6 +45,7 @@ func TestParseCCode(t *testing.T) {
 					MessageID:     "XSMG200I",
 				},
 				{
+					Type:          "P",
 					ID:            parser.CheckpointingDisabled,
 					Date:          time.Date(2026, time.February, 3, 23, 28, 46, 0, time.UTC),
 					Description:   "sample",
@@ -50,6 +54,7 @@ func TestParseCCode(t *testing.T) {
 					MessageID:     "XCPK005W",
 				},
 				{
+					Type:          "P",
 					ID:            parser.CopyTerminationRecord,
 					Date:          time.Date(2026, time.February, 3, 23, 28, 52, 0, time.UTC),
 					Description:   "sample",
@@ -58,6 +63,7 @@ func TestParseCCode(t *testing.T) {
 					MessageID:     "SCPA000I",
 				},
 				{
+					Type:          "P",
 					ID:            parser.CopyTerminationRecord,
 					Date:          time.Date(2026, time.February, 3, 23, 28, 52, 0, time.UTC),
 					Description:   "sample",
@@ -66,6 +72,7 @@ func TestParseCCode(t *testing.T) {
 					MessageID:     "SCPA000I",
 				},
 				{
+					Type:          "P",
 					ID:            parser.ProcessEnded,
 					Date:          time.Date(2026, time.February, 3, 23, 28, 52, 0, time.UTC),
 					Description:   "sample",
@@ -74,6 +81,7 @@ func TestParseCCode(t *testing.T) {
 					MessageID:     "XSMG252I",
 				},
 				{
+					Type:          "P",
 					ID:            parser.ProcessEnded,
 					Date:          time.Date(2026, time.February, 3, 23, 28, 52, 0, time.UTC),
 					Description:   "sample",
@@ -81,6 +89,26 @@ func TestParseCCode(t *testing.T) {
 					Code:          0,
 					MessageID:     "XSMG252I",
 				},
+			},
+		},
+		{
+			inputFilepath: filepath.Join("testdata", "ccode_error.txt"),
+			expected: []parser.SummaryStat{
+				{Type: "P", ID: parser.RecordID{ID: "XIPT"}, Date: time.Date(2026, time.February, 5, 22, 45, 40, 0, time.UTC), Description: "SENDFILE", ProcessNumber: "21", Code: 8, MessageID: "XIPT004I"},
+				{Type: "E", ID: parser.RecordID{ID: "RNCF"}, Date: time.Date(2026, time.February, 5, 22, 45, 40, 0, time.UTC), Description: "Attempt to connect to remote node frbpajcd02 failed"},
+				{Type: "P", ID: parser.RecordID{ID: "XIPT"}, Date: time.Date(2026, time.February, 5, 22, 46, 10, 0, time.UTC), Description: "SENDFILE", ProcessNumber: "21", Code: 8, MessageID: "XIPT004I"},
+				{Type: "E", ID: parser.RecordID{ID: "RNCF"}, Date: time.Date(2026, time.February, 5, 22, 46, 10, 0, time.UTC), Description: "Attempt to connect to remote node frbpajcd02 failed"},
+				{Type: "P", ID: parser.RecordID{ID: "XIPT"}, Date: time.Date(2026, time.February, 5, 22, 46, 40, 0, time.UTC), Description: "SENDFILE", ProcessNumber: "21", Code: 8, MessageID: "XIPT004I"},
+				{Type: "E", ID: parser.RecordID{ID: "RNCF"}, Date: time.Date(2026, time.February, 5, 22, 46, 40, 0, time.UTC), Description: "Attempt to connect to remote node frbpajcd02 failed"},
+				{Type: "P", ID: parser.RecordID{ID: "XIPT"}, Date: time.Date(2026, time.February, 5, 22, 47, 10, 0, time.UTC), Description: "SENDFILE", ProcessNumber: "21", Code: 8, MessageID: "XIPT004I"},
+				{Type: "E", ID: parser.RecordID{ID: "RNCF"}, Date: time.Date(2026, time.February, 5, 22, 47, 10, 0, time.UTC), Description: "Attempt to connect to remote node frbpajcd02 failed"},
+				{Type: "E", ID: parser.SubmitProcess, Date: time.Date(2026, time.February, 5, 22, 50, 40, 0, time.UTC), Description: "Submit command issued."},
+				{Type: "P", ID: parser.RecordID{ID: "XIPT"}, Date: time.Date(2026, time.February, 5, 22, 57, 10, 0, time.UTC), Description: "SENDFILE", ProcessNumber: "21", Code: 8, MessageID: "XIPT004I"},
+				{Type: "E", ID: parser.RecordID{ID: "RNCF"}, Date: time.Date(2026, time.February, 5, 22, 57, 10, 0, time.UTC), Description: "Attempt to connect to remote node frbpajcd02 failed"},
+				{Type: "P", ID: parser.RecordID{ID: "XIPT"}, Date: time.Date(2026, time.February, 5, 23, 7, 11, 0, time.UTC), Description: "SENDFILE", ProcessNumber: "21", Code: 8, MessageID: "XIPT004I"},
+				{Type: "E", ID: parser.RecordID{ID: "RNCF"}, Date: time.Date(2026, time.February, 5, 23, 7, 11, 0, time.UTC), Description: "Attempt to connect to remote node frbpajcd02 failed"},
+				{Type: "P", ID: parser.RecordID{ID: "XIPT"}, Date: time.Date(2026, time.February, 5, 23, 17, 11, 0, time.UTC), Description: "SENDFILE", ProcessNumber: "21", Code: 8, MessageID: "XIPT004I"},
+				{Type: "E", ID: parser.RecordID{ID: "RNCF"}, Date: time.Date(2026, time.February, 5, 23, 17, 11, 0, time.UTC), Description: "Attempt to connect to remote node frbpajcd02 failed"},
 			},
 		},
 	}
@@ -111,9 +139,16 @@ func TestParseCCode_ByCode(t *testing.T) {
 	}{
 		{
 			inputFilepath: filepath.Join("testdata", "ccode_stats.txt"),
-			successful:    7,
+			successful:    6,
 			warnings:      1,
 			errors:        0,
+			catastrophic:  0,
+		},
+		{
+			inputFilepath: filepath.Join("testdata", "ccode_error.txt"),
+			successful:    0,
+			warnings:      0,
+			errors:        7,
 			catastrophic:  0,
 		},
 	}
