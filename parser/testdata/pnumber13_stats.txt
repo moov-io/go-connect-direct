@@ -1,0 +1,358 @@
+Direct> sel stat pnumber=13 detail;
+===============================================================================
+                           SELECT  STATISTICS
+===============================================================================
+EVENT RECORD     Record Id => QCEX
+Process Name     => sample         Stat Log Date    => 02/03/2026
+Process Number   => 13             Stat Log Time    => 23:26:37.579
+OS Process Id    => 2815
+Submitter Class  =>
+Submitter Id     => cdadmin@cdnode
+
+Step Start Date  =>                Step Start Time  =>
+Step Stop Date   =>                Step Stop Time   =>
+Step Elapsed Time=>
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 0
+Message Text     => TCQ queue change from WAIT to EXEC, status PE.
+-------------------------------------------------------------------------------
+EVENT RECORD     Record Id => SUBP
+Process Name     =>                Stat Log Date    => 02/03/2026
+Process Number   => 13             Stat Log Time    => 23:26:37.580
+OS Process Id    => 2246106
+Submitter Class  =>
+Submitter Id     => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37
+Step Stop Date   =>                Step Stop Time   =>
+Step Elapsed Time=>
+
+From node        => S
+Rstr             =>
+SNODE            =>
+Completion Code  => 0
+Message Id       => LCCC013I
+Message Text     => Submit command issued.
+Short text       => Submit process command is complete
+-------------------------------------------------------------------------------
+EVENT RECORD     Record Id => SSTR
+Process Name     =>                Stat Log Date    => 02/03/2026
+Process Number   => 13             Stat Log Time    => 23:26:37.869
+OS Process Id    => 2246108
+Submitter Class  =>
+Submitter Id     =>
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.586
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:37.869
+Step Elapsed Time=> 00:00:00
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 0
+Message Text     => Session started, SNODE:cdnode, Protocol:tcp
+Secure+ Protocol => TLSV13
+Cipher Suite     => TLS_AES_256_GCM_SHA384
+Security Mode    => FIPS 140-2
+Protocol Override     => N
+CipherSuite Override  => N
+Encrypt Data Override => N
+Certificate Subject   => (CN=fedach-dit,SN=36:21:b4:3e:4b:af:33:7d:b0:35:0
+                         1:85:af:57:60:39:41:60:a6:d3,FP=c1463ad1cd9213786
+                         f8f655694608b5d17decffd)
+Certificate Issuer    => (CN=fedach-dit)
+  LCLP	127.0.0.1, PORT=50390  RMTP	127.0.0.1, PORT=1364
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  PSTR
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:37.871
+OS Process Id      => 2246108
+Submitter Class    => 1
+Submitter Instance => 55d43d73-85fc-4494-9f67-a100ec1a845b
+SNode User Id      =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.871
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:37.871
+Step Elapsed Time=> 00:00:00
+
+From node        => S
+Rstr             => N
+SNODE            => cdnode
+Completion Code  => 0
+Message Id       => XSMG200I
+Short Text       => Process started, process:13 name:sample SNODE:cdnod
+                    e
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  PSTR
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:37.914
+OS Process Id      => 2246111
+Submitter Class    =>
+Submitter Instance => 55d43d73-85fc-4494-9f67-a100ec1a845b
+SNode User Id      =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.914
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:37.914
+Step Elapsed Time=> 00:00:00
+
+From node        => S
+Rstr             => N
+SNODE            => cdnode
+Completion Code  => 0
+Message Id       => XSMG200I
+Short Text       => Remote process started
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  XCPK
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:39.196
+OS Process Id      => 2246108
+Submitter Class    =>
+Submitter Id       =>
+
+Step Start Date  =>                Step Start Time  =>
+Step Stop Date   =>                Step Stop Time   =>
+Step Elapsed Time=>
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 4
+Message Id       => XCPK005W
+Short Text       => Ckpt 0 is outside object store range, 10485760 to 1
+                    073741824.
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  FIOX
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.772
+OS Process Id      => 2246108
+Submitter Class    =>
+Submitter Id       =>
+
+Step Start Date  =>                Step Start Time  =>
+Step Stop Date   =>                Step Stop Time   =>
+Step Elapsed Time=>
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 8
+Message Id       => FIOX043E
+Short Text       => IOExitFactory.createReader failed, scheme=gs, error
+                    =Error on container/bucket 'moov-platform-staging-a
+                    chgateway-fedach', object 'outbound/1770161197.txt'
+                      ibm-cd-fedach1@moov-platform-staging.iam.gservice
+                    account.com does not have storage.objects.get acces
+                    s to the Google Cloud Storage object. Permission 's
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  XCPS
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.773
+OS Process Id      => 2246108
+Submitter Class    =>
+Submitter Id       =>
+
+Step Start Date  =>                Step Start Time  =>
+Step Stop Date   =>                Step Stop Time   =>
+Step Elapsed Time=>
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 8
+Feedback Code    => 2
+Message Id       => XCPS002I
+Short Text       => Source file open failed. Filename=gs://moov-platfor
+                    m-staging-achgateway-fedach/outbound/1770161197.txt
+                    .
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  LSST
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.773
+OS Process Id      => 2246108
+Submitter Class    =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.914
+Src  File        => gs://moov-platform-staging-achgateway-fedach/outbound/1770161197.txt
+Dest File        => gs://moov-ibmcd-fedach-7b2egd/outbound/1770161197.txt
+
+Step Name        => step01
+From node        => P
+Rstr             => N
+SNODE            => cdnode
+Completion Code  => 0
+Message Id       => XSMG201I
+Short Text       => Local Step started.
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  RSST
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.773
+OS Process Id      => 2246111
+Submitter Class    =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:40.773
+Src  File        => gs://moov-platform-staging-achgateway-fedach/outbound/1770161197.txt
+Dest File        => gs://moov-ibmcd-fedach-7b2egd/outbound/1770161197.txt
+
+Step Name        => step01
+From node        => P
+Rstr             => N
+SNODE            => cdnode
+Completion Code  => 0
+Message Id       => XSMG201I
+Short Text       => Remote Step started.
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  CTRC
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.814
+OS Process Id      => 2246111
+Submitter Class    =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:40.773
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:40.814
+Step Elapsed Time=> 00:00:00
+
+Step Name        => step01
+From node        => P
+Rstr             => N
+SNODE            => cdnode
+Completion Code  => 8
+Message Id       => XCPS002I
+Short Text       => Source file open failed. Filename=gs://moov-platfor
+                    m-staging-achgateway-fedach/outbound/1770161197.txt
+                    .
+Ckpt=>N  Lkfl=>N  Rstr=>N  Xlat=>N  Scmp=>N  Ecmp=>Y  Ecpr=>0.00 CRC=>N
+FASP=>N
+Zlvl=>0  Zwin=>0  Zmem=>0
+Secure+ Protocol => TLSV13
+Cipher Suite     => TLS_AES_256_GCM_SHA384
+Security Mode    => FIPS 140-2
+Protocol Override     =>
+CipherSuite Override  =>
+Encrypt Data Override =>
+Certificate Subject   => (CN=fedach-dit,SN=36:21:b4:3e:4b:af:33:7d:b0:35:0
+                         1:85:af:57:60:39:41:60:a6:d3,FP=c1463ad1cd9213786
+                         f8f655694608b5d17decffd)
+Certificate Issuer    => (CN=fedach-dit)
+Local node       => S
+From node        => P
+Src  File        => gs://moov-platform-staging-achgateway-fedach/outbound/1770161197.txt
+Dest File        => gs://moov-ibmcd-fedach-7b2egd/outbound/1770161197.txt
+     Source                     Destination
+ Ccode      =>8              Ccode        =>8
+ Msgid      =>XCPS002I       Msgid        =>XSMG622I
+ Bytes Read =>0              Bytes Written=>0
+ Recs  Read =>0              Recs  Written=>0
+ Bytes Sent =>0              Bytes Recvd  =>0
+ Rus   Sent =>0              Rus   Recvd  =>0
+ Ru    Size =>65536
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  CTRC
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.814
+OS Process Id      => 2246108
+Submitter Class    =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.916
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:40.814
+Step Elapsed Time=> 00:00:03
+
+Step Name        => step01
+From node        => P
+Rstr             => N
+SNODE            => cdnode
+Completion Code  => 8
+Message Id       => XCPS002I
+Short Text       => Source file open failed. Filename=gs://moov-platfor
+                    m-staging-achgateway-fedach/outbound/1770161197.txt
+                    .
+Ckpt=>N  Lkfl=>N  Rstr=>N  Xlat=>N  Scmp=>N  Ecmp=>Y  Ecpr=>0.00 CRC=>N
+FASP=>N
+Zlvl=>1  Zwin=>13  Zmem=>4
+Secure+ Protocol => TLSV13
+Cipher Suite     => TLS_AES_256_GCM_SHA384
+Security Mode    => FIPS 140-2
+Protocol Override     => N
+CipherSuite Override  => N
+Encrypt Data Override => N
+Certificate Subject   => (CN=fedach-dit,SN=36:21:b4:3e:4b:af:33:7d:b0:35:0
+                         1:85:af:57:60:39:41:60:a6:d3,FP=c1463ad1cd9213786
+                         f8f655694608b5d17decffd)
+Certificate Issuer    => (CN=fedach-dit)
+Local node       => P
+From node        => P
+Src  File        => gs://moov-platform-staging-achgateway-fedach/outbound/1770161197.txt
+Dest File        => gs://moov-ibmcd-fedach-7b2egd/outbound/1770161197.txt
+     Source                     Destination
+ Ccode      =>8              Ccode        =>8
+ Msgid      =>XCPS002I       Msgid        =>XSMG622I
+ Bytes Read =>0              Bytes Written=>0
+ Recs  Read =>0              Recs  Written=>0
+ Bytes Sent =>0              Bytes Recvd  =>0
+ Rus   Sent =>0              Rus   Recvd  =>0
+ Ru    Size =>65536
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  PRED
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.816
+OS Process Id      => 2246111
+Submitter Class    =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.914
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:40.815
+Step Elapsed Time=> 00:00:03
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 8
+Message Id       => XCPS002I
+Short Text       => Source file open failed. Filename=&FILE.
+-------------------------------------------------------------------------------
+PROCESS RECORD   Record Id =>  PRED
+Process Name       => sample         Stat Log Date  => 02/03/2026
+Process Number     => 13             Stat Log Time  => 23:26:40.816
+OS Process Id      => 2246108
+Submitter Class    =>
+Submitter Id       => cdadmin@cdnode
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.873
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:40.816
+Step Elapsed Time=> 00:00:03
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 8
+Message Id       => XCPS002I
+Short Text       => Source file open failed. Filename=&FILE.
+-------------------------------------------------------------------------------
+EVENT RECORD     Record Id => SEND
+Process Name     =>                Stat Log Date    => 02/03/2026
+Process Number   => 13             Stat Log Time    => 23:26:40.820
+OS Process Id    => 2246108
+Submitter Class  =>
+Submitter Id     =>
+
+Step Start Date  => 02/03/2026     Step Start Time  => 23:26:37.586
+Step Stop Date   => 02/03/2026     Step Stop Time   => 23:26:40.819
+Step Elapsed Time=> 00:00:03
+
+From node        => S
+Rstr             =>
+SNODE            => cdnode
+Completion Code  => 0
+Message Text     => Session ended, Session Manager shutting down SNODE:cdn
+                  ode
+-------------------------------------------------------------------------------
+===============================================================================
+Select Statistics Completed Successfully.

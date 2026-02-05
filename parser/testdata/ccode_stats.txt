@@ -1,0 +1,18 @@
+Direct> sel stat ccode(le,4) pnumber=14;
+===============================================================================
+                           SELECT  STATISTICS
+===============================================================================
+P RECID LOG TIME            PNAME        PNUMBER  STEPNAME   CCOD FDBK MSGID
+E RECID LOG TIME            MESSAGE TEXT
+X RECID LOG TIME            APP DESC     USID     NODENAME   CCOD MSGID
+-------------------------------------------------------------------------------
+E SUBP  02/03/2026 23:28:45 Submit command issued.
+P PSTR  02/03/2026 23:28:45 sample            14                0      XSMG200I
+P PSTR  02/03/2026 23:28:45 sample            14                0      XSMG200I
+P XCPK  02/03/2026 23:28:46 sample            14                4      XCPK005W
+P CTRC  02/03/2026 23:28:52 sample            14  step01        0      SCPA000I
+P CTRC  02/03/2026 23:28:52 sample            14  step01        0      SCPA000I
+P PRED  02/03/2026 23:28:52 sample            14                0      XSMG252I
+P PRED  02/03/2026 23:28:52 sample            14                0      XSMG252I
+===============================================================================
+Select Statistics Completed Successfully.
