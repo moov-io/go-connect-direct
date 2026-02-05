@@ -31,6 +31,16 @@ type SummaryStat struct {
 }
 
 var (
+	// CompletionCodeSuccess is defined to be a "numeric code returned from a
+	// completed Process that indicates failure or success."
+	//
+	// The following are the standard return codes:
+	//  - 0 indicates successful completion
+	//  - 4 indicates a warning
+	//  - 8 indicates an error
+	//  - 16 indicates a catastrophic error
+	//
+	// Source: https://public.dhe.ibm.com/software/commerce/doc/mft/scc/53/ReportsGuide.pdf
 	CompletionCodeSuccess           = 0
 	CompletionCodeWarning           = 4
 	CompletionCodeError             = 8

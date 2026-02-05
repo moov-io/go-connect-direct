@@ -1,0 +1,1252 @@
+=================================================
+Maintenance for IBM Connect:Direct for UNIX 6.2.0
+=================================================
+
+This maintenance archive includes module replacements for the C:D UNIX 6.2.0
+code base. It is applicable to C:D UNIX version 6.2.0, and contains all the new
+functionality and fixes as described in the C:D UNIX 6.2.0 Release notes, as
+well as fixes for the issues listed below.
+
+This release implements IBM's standard V.R.M.F method of identifying software.
+V, R, M and F are Version, Release, Modification and Fix Pack respectively.  In
+general, V.R.M imply new functionality, while F is an accumulation of fixes
+called a Fix Pack.  The term Fix Pack will be used going forward in place of
+Cumulative Maintenance.  Individual fixes also have a new name, Interim Fixes,
+or iFixes for short.  iFixes are numbered sequentially from one starting with
+any increment to V, R, M or F.  Please see IBM's website for further details
+regarding this methodology.
+
+After applying the maintenance, the CLI banner will report that your C:D
+version is 6.2.0.x, where x is the current Fix Pack.  It will also display the
+date that the maintenance was created.
+
+For more information, please refer to the C:D UNIX 6.2.0 Release Notes.
+
+=================================================
+iFixes listed below apply to C:D for UNIX 6.2.0.0
+=================================================
+
+001) CDUA-3012  commit date:  01 Sep 2021
+-----------------------------------------
+     During a silent upgrade, initparm is updated to add the value of cdfa.enable same
+     as that passed as option, if File Agent is installed inside CD Unix installation
+     directory. So, cdfa.enable=y gets added even if standalone File Agent is installed.
+
+     Updated code to add cdfa.enable=y only if Integrated File Agent is installed.
+
+002) MFT-12365 / APAR IT37802  commit date:  14 Sep 2021
+--------------------------------------------------------
+     C:D Install Agent startup creates a /tmp/.com_ibm_tools_attach directory
+     used by the IBM Java Attach API. The IBM Java Attach API is not used in
+     C:D, so the /tmp/.com_ibm_tools_attach directory creation is unnecessary
+     and seen by some as a possible security risk.
+
+003) MFT-12380 / APAR IT37900  commit date:  14 Sep 2021
+--------------------------------------------------------
+     If the name of the S3 IO Exit is different of 'S3', the exception
+     S3IOExitException: S3File: Invalid filename pathname is detected 'null'
+     is raised.
+
+004) CDUA-3013  commit date:  20 Sep 2021
+-----------------------------------------
+     The CDWS connection is reset or logged out when apply changes button is clicked
+     on file agent setting. The update of configuration fails for the integrated
+     File Agent on ZLINUX server.
+     The code is updated to handle the large configuration on ZLINUX.
+
+005) CDUA-2889  commit date:  22 Sep 2021
+-----------------------------------------
+     In the scenario where a user declines adding a local user, yet chooses to add a
+     remote user, the remote user is added twice to the user file.
+
+     The changes are done to prevent the creation of duplicate entries in the user file.
+
+006) CDUA-2988  commit date:  27 Sep 2021
+-----------------------------------------
+     Enabled user authority for stat logging from external sources like File Agent.
+     If cmd.external.stat.log in userfile is set to 'n', File Agent won't be able to
+     log its statistics in Connect Direct server's stats.
+
+007) CDUA-2994  commit date:  28 Sep 2021
+-----------------------------------------
+     A client request to view the initparm.cfg file may fail inappropriately with
+     XCMM035I.
+
+008) MFT-12352 / APAR IT38513  commit date:  29 Sep 2021
+--------------------------------------------------------
+     Silent install of CD Unix fails intermittently due to failure in
+     installation of Install Agent.
+
+     When this issue occurs, a Java stack trace is produced that shows
+     "java.lang.NullPointerException at com.zerog.ia.installer.LifeCycleManager.de".
+
+009) CDUA-2043 / APAR IT37922  commit date:  05 Oct 2021
+--------------------------------------------------------
+     A copy step using zFBA may fail and report message SCZF004E, Could not
+     Open zFBA devices. If this failure is traced, the step may hang in
+     execute state with a rapidly growing trace file output and ndmsmgr
+     consuming significant CPU resource.
+
+010) CDUA-2980 / APAR IT38016  commit date:  06 Oct 2021
+--------------------------------------------------------
+     After upgrading to C:D Unix 6.0/6.1, an attempt to open the 'direct' prompt
+     with a trace parameter failed with error XAPI005I Return Code: 8 Feedback: 0.
+     Ensure that the ndmauth trace logs are always written to the ndm/bin directory
+     to avoid permissions failures on creation of the trace logs.
+
+011)  MFT-11901 / APAR IT36440  commit date:  13 Oct 2021
+--------------------------------------------------------
+     A process submit step (submit within a process) may fail and report an XPAE003I
+     message if the submitted process text contains a comment on the first line.
+
+012)  MFT-12512 / APAR IT38545  commit date:  15 Oct 2021
+--------------------------------------------------------
+     On some AIX systems, a submitted process will fail to execute, with
+     statistics showing nothing more than a series of queue transitions from
+     WAIT/WC to EXEC/PE to TIMER/WC, until retries are exhausted.
+
+013) FLAG-256  commit date:  20 Oct 2021
+----------------------------------------
+     Integrated File Agent failed to connect to the Connect:Direct server with
+     com.stercomm.csg.SPAdmin.JavaCDSP error in logs. Updated Integrated File Agent.
+
+014) MFT-12318 / APAR IT37795  commit date:  20 Oct 2021
+--------------------------------------------------------
+     Due to newer versions of Linux not maintaining binary compatibility for the
+     Transport Independent RPC Library (libtirpc) with older versions, RHEL 8
+     and RHEL 7, for example, CDU binaries executed from a directory other than
+     our ndm/bin directory may fail, indicating "error while loading shared
+     libraries: libtirpc.so.1". See the Known Restrictions page of the CDU
+     Release Notes for more details.
+
+     The Known Restrictions page also describes a symbolic link which may be
+     created to enable execution of CDU binaries from directories other than
+     ndm/bin. If implementation of this link was desired, it had to be created
+     manually.
+
+     This fix updates the interactive and automated installation scripts to
+     provide an option for creating this link during installs and upgrades. The
+     interactive installation script, cdinstall, will prompt for the option if
+     the link is not detected. A new parameter, cdai_tirpcCreateLink, has been
+     added to the automated installation script, cdinstall_a, which takes a 'y'
+     or 'n' value to optionally create this link.
+
+015) CDUA-2983  commit date:  26 Oct 2021
+-----------------------------------------
+     Integrated File Agent stats are not correctly displayed on Connect:Direct stats for
+     some parameters.
+
+016) FLAG-257  commit date:  27 Oct 2021
+-----------------------------------------
+     Updated Integrated File Agent to Version 2.0.0.0_iFix007.
+
+-----------------------------------------------------------
+iFixes listed above are accumulated in C:D for UNIX 6.2.0.1
+-----------------------------------------------------------
+
+===========================================================
+iFixes listed below apply to C:D for UNIX 6.2.0.1
+===========================================================
+
+001) CDUA-2946  commit date:  28 Oct 2021
+-----------------------------------------
+     In the SCNT statistics record, the MSAS field, which reports the
+     theoretical maximum number of simultaneous sessions a node could run
+     (if licensed), is arbitrarily reporting 999, instead of calculating
+     an appropriate value based on system resource limits.
+
+002) MFT-12453 / APAR IT38835  commit date:  29 Oct 2021
+--------------------------------------------------------
+     Building user exits with make_exit_c and make_exit_C may fail on later
+     Linux versions, such as RHEL 8, indicating "fatal error: rpc/rpc.h: No
+     such file or directory".
+
+003) MFT-12582 / APAR IT38836  commit date:  03 Nov 2021
+--------------------------------------------------------
+     S3 upload fails for 0 byte files when an aws policy denies non server side encrypted
+     (sse) objects.
+
+004) CDUA-3073 / APAR IT39028  commit date:  09 Nov 2021
+--------------------------------------------------------
+     Various C:D UNIX executable modules, including cdpmgr, may fail to run on
+     Ubuntu 20 systems, indicating an error loading shared library
+     libtirpc.so.1.
+
+     Note:  With this iFix, Ubuntu versions 18 and 20 are added to the list of
+     supported software for Intel and AMD x86-64.
+
+005) MFT-12621 / APAR IT38901  commit date:  15 Nov 2021
+--------------------------------------------------------
+     When an automated upgrade (cdinstall_a) fails due to Install Agent
+     startup failure, the Install Agent logs describing the startup failure
+     may be lost during the subsequent restore of the original CDU installed.
+     Fix adds capturing the Install Agent logs and saving them in the
+     deployment directory when this occurs.
+
+006) CDUA-3085  commit date:  16 Nov 2021
+-----------------------------------------
+     When a silent upgrade is performed from a CDU version where Install Agent is
+     not up due to Secure+ not installed/configured, upgrade is marked as failed
+     as Install Agent is unable to start even after upgrade.
+
+     As a part of this fix, Install Agent startup is not attempted after a silent
+     upgrade, if it was not up before upgrade.
+
+007) CDUA-2754  commit date:  16 Nov 2021
+--------------------------------------------------------
+     The SSLV2 hello has been disabled. Note that TLS 1.0 is deprecated by
+     the IETF since March 2021.
+
+008) CDUA-3064  commit date:  17 Nov 2021
+-----------------------------------------
+     Sometimes deployment fails during container/helm chart upgrade and configuration
+     present on persistent volume is also lost. Now, when new container/pod comes up
+     it doesn't have previous configuration.
+
+009) CDUA-3106  commit date:  29 Nov 2021
+-----------------------------------------
+     User Id is not captured in stats when a user sign on to CDU server fails.
+
+010) CDUA-3096  commit date:  02 Dec 2021
+-----------------------------------------
+     When changes to initparm.cfg is done using CDWS or CCM and pod is deleted so that
+     new pod comes up with updated initparm.cfg parameters. But new pod fails to come
+     up and keeps on restaring showing error CD service not started.
+
+011) CDUA-2830 / APAR IT39113  commit date:  03 Dec 2021
+--------------------------------------------------------
+     If the connection is broken when CDU is pnode pulling a file from a
+     remote node to an S3 destination with checkpoint enabled, on restart, the
+     checkpoint resynchronization fails with error message FIOX023E reported,
+     and the copy step is restarted from the beginning.
+
+012) CDUA-3134 / APAR IT39167  commit date:  02 Dec 2021
+--------------------------------------------------------
+     Expired passwords are not detected by CDU when authenticating credentials
+     on HP-UX Itanium and AIX platforms. Also, when credential validation
+     failed, no reason was logged for the failure.  Fix adds a new message,
+     XIDC001I, logged only on the validating side and viewable only by
+     administrators, indicating why credential validation was failed.
+
+013) CDUA-3056 commit date:  06 Dec 2021
+----------------------------------------
+     In some scenarios, C:D Control Center may incorrectly conclude that
+     multiple C:D UNIX nodes are running on the same system.
+
+014) MFT-11969 / APAR IT36604  commit date:  07 Dec 2021
+--------------------------------------------------------
+     When a remote C:D initiates a secure session to C:D UNIX (CDU) requesting Secure+ protocols
+     that are not supported by CDU, and CDU has Secure+ Override enabled for that incoming session,
+     it's possible that the session will fail inappropriately with a CSPA091E message.
+
+015) CDUA-2698  commit date:  07 Dec 2021
+-----------------------------------------
+     SPCli shows a Basename parameter when displaying a remote node, which is
+     inappropriate since the Basename parameter became irrelevant when the
+     Secure+ STS protocol was dropped from support.
+
+016) MFT-12769 / APAR IT39369  commit date:  12 Dec 2021
+--------------------------------------------------------
+     The S3 File IO Exit, Install Agent, and File Agent components, included in
+     IBM Sterling Connect:Direct for UNIX use versions of Apache Log4j2 that are
+     vulnerable to the below listed issue.  Apache Log4j2 has been upgraded to
+     version 2.15.0.
+
+     CVE-2021-44228: JNDI features of Apache Log4j2 versions <= 2.14.1, used in
+                     configuration, log messages, and parameters do not protect
+                     against attacker controlled LDAP and other JNDI related
+                     endpoints. An attacker who can control log messages or log
+                     message parameters can execute arbitrary code loaded from
+                     LDAP servers when message lookup substitution is enabled.
+                     From log4j 2.15.0, this behavior has been disabled by
+                     default.
+
+017) MFT-12790 / APAR IT39452  commit date:  17 Dec 2021
+--------------------------------------------------------
+     The S3 File IO Exit, Install Agent, and File Agent components, included in
+     IBM Sterling Connect:Direct for UNIX use versions of Apache Log4j2 that are
+     vulnerable to the below listed issue.  Apache log4j2 has been upgraded to
+     version 2.16.0.
+
+     CVE-2021-45046: Apache Log4j is vulnerable to a denial of service, caused by
+ 		     an incomplete fix of CVE-2021-44228 in certain non-default
+		     configurations. A remote attacker with control over Thread
+		     Context Map (MDC) input data or a Thread Context Map pattern
+		     to exploit this vulnerability to craft malicious input data
+		     using a JNDI Lookup pattern and cause a denial of service.
+
+018) MFT-12807 / APAR IT39480  commit date: 21 Dec 2021
+-------------------------------------------------------
+     The S3 File IO Exit, Install Agent, and File Agent components, included in
+     IBM Sterling Connect:Direct for UNIX use versions of Apache Log4j2 that are
+     vulnerable to the below listed issue.  Apache log4j2 has been upgraded to
+     version 2.17.0.
+
+     CVE-2021-45105: Apache Log4j versions <= 2.16.0 did not protect from uncontrolled
+		     recursion from self-referential lookups. This allows an attacker
+		     with control over Thread Context Map data to cause a denial of
+		     service when a crafted string is interpreted.
+
+019) CDUA-3152  commit date:  27 Dec 2021
+-----------------------------------------
+     View option for Integrated File Agent authority did not work on CD Web services
+     UI while creating a new user authority.
+
+020) MFT-12865  commit date: 24 Jan 2022
+----------------------------------------
+     Apache log4j2 upgraded to version 2.17.1.
+
+021) MFT-12474 / APAR IT39069  commit date:  15 Dec 2022
+--------------------------------------------------------
+     C:D monitors the Installation Agent status periodically. The error
+     reporting for this procedure was incomplete.  Fix adds a new message,
+     CDAI003E, which is used to log more complete information if the procedure
+     fails.
+     Change also adds a fix for a defect on AIX, where in some scenarios there
+     may be hung cdpmgr processes owned by root.
+
+022) MFT-12710 / APAR IT39420  commit date:  13 Jan 2022
+--------------------------------------------------------
+     On HP-UX Itanium systems using a shadow password file, client connections
+     presenting valid credentials may fail, generating an XCMM038I message.
+     Server connections may fail generating an XSMG245I message.
+
+     Fix introduces a new requirement for the Password Hash Infrastructure (PHI)
+     package on HP-UX. To check for package installation status:
+
+          11iv3 (B.11.31): swlist -a state SHA11i3
+          11iv2 (B.11.23): swlist -a state SHA
+
+     To download and install the package if necessary:
+
+          11iv3 (B.11.31): https://myenterpriselicense.hpe.com/cwp-ui/free-software/PHI11i3
+          11iv2 (B.11.23): https://myenterpriselicense.hpe.com/cwp-ui/free-software/PHI
+
+023) CDUA-3177  commit date:  13 Jan 2022
+-----------------------------------------
+     cdcustrpt incorrectly identifies ndm/lib/libtirpc.so.1 link as non-standard on Linux
+     systems where libtirpc.so.1 is not available
+
+024) CDUA-1699  commit date:  14 Jan 2022
+-----------------------------------------
+     Output of Select process detail command does not display Snode User Id.
+
+025) MFT-12538 / APAR IT38957  commit date:  18 Jan 2022
+--------------------------------------------------------
+     When CDU is preparing the list of matching files for a wildcard copy step,
+     for security, matching files that are not readable by the local user are
+     not added to the list. If CDU is snode and one or more of the matching
+     files is unable to be opened, the pnode does not get notified about these
+     files and will consider the copy step to be successful.
+
+     To fix this issue, when CDU is snode, one matching file that is not
+     readable is allowed to be added to the list of files to be sent, so that
+     one of the individual copy steps will fail, giving the pnode awareness of
+     the situation. For security, snode masks the name of the unreadable
+     matching file before sending the failing step information to pnode.
+
+026) MFT-12634 / APAR IT39304  commit date:  19 Jan 2022
+--------------------------------------------------------
+     When a KQV client, such as C:D Application Interface for Java or C:D Web
+     Services, issues a select statistics or select process request to C:D UNIX
+     that includes a submitter parameter, the command may fail with the C:D UNIX
+     ndmcmgr process killed by a SIGABRT (signal 6) or SIGSEGV (signal 11).
+
+027) CDUA-3207 / APAR IT39749  commit date:  25 Jan 2022
+--------------------------------------------------------
+     An inappropriate CDIA003E message indicating the Installation Agent
+     helper from the previous check is still running may be logged every five
+     minutes.
+
+028) MFT-12577 / APAR IT38803  commit date:  28 Jan 2022
+--------------------------------------------------------
+     A run task may fail to execute, generating an XSMG424I warning that
+     inappropriately indicates "RPC call to stat_log_1() returns null. RPC
+     time out."
+
+029) CDUA-3197/MFT-12990 / APAR IT40237  commit date:  01 Feb 2022
+------------------------------------------------------------------
+     Integrated File Agent support has been added to CDU container.
+
+     IBM Sterling Connect:Direct for UNIX Certified Container is affected by
+     multiple vulnerabilities in Red Hat Universal Base Image version
+     8.4-206.1626828523 and Binutils version 2.30-93.
+
+     IBM Sterling Connect:Direct for UNIX Certified Container is hosted by
+     Red Hat Universal Base Image. Due to use of Red Hat Universal Base Image
+     and binutils package, IBM Sterling Connect:Direct for UNIX Certified
+     Container is vulnerable to the following:
+     buffer overflow (CVE-2019-20838, CVE-2020-14155, CVE-2020-35448,
+        CVE-2021-20266, CVE-2021-23840, CVE-2021-3200, CVE-2021-35942,
+        CVE-2021-36087, CVE-2021-37600, CVE-2021-38185),
+
+     denial of service (CVE-2020-16135, CVE-2021-20231, CVE-2021-20232,
+        CVE-2021-23841, CVE-2021-28135, CVE-2021-33574, CVE-2021-3487,
+        CVE-2021-3580),
+     elevation of privilege (CVE-2021-20197),
+     sensitive data exposure (CVE-2021-22876, CVE-2021-22898, CVE-2021-22923),
+     drive-by download (CVE-2021-22922),
+     unauthorized access (CVE-2021-22924),
+     data corruption (CVE-2021-27218, CVE-2021-3421),
+     side-channel attack (CVE-2021-33560),
+     arbitrary code execution (CVE-2021-3445),
+     use-after-free (CVE-2021-36084, CVE-2021-36085, CVE-2021-36086)
+
+     This fix updates Red Hat Universal base image to 8.5-226 and
+     binutils to 2.30-108
+
+-----------------------------------------------------------
+iFixes listed above are accumulated in C:D for UNIX 6.2.0.2
+-----------------------------------------------------------
+
+===========================================================
+iFixes listed below apply to C:D for UNIX 6.2.0.2
+===========================================================
+
+001) CDUA-3232  commit date:  11 Feb 2022
+-----------------------------------------
+     Integrated File Agent may fail to start, even though cdfastart.log file
+     shows "File agent started successfully".  Note:  this issue does not
+     affect Integrated File Agent support added to IBM Certified Container
+     in 6.2.0.2.
+
+002) CDUA-1701  commit date:  28 Feb 2022
+-----------------------------------------
+     KQV client submitted delete process command using submitter search
+     criteria fails to find matching processes.
+
+003) CDUA-3245 / APAR IT40116  commit date:  03 Mar 2022
+--------------------------------------------------------
+     cdinstall script run on HP-UX may mistakenly indicate that Password Hash
+     Infrastructure (PHI) package installation is required. PHI is not
+     required on HP-UX systems that use traditional password storage.
+
+004) MFT-12886 / APAR IT40115  commit date:  04 Mar 2022
+--------------------------------------------------------
+     When an upgrade is performed, the old install-agent jar is not removed.
+     Added a fix to keep only the latest install-agent jar after an upgrade.
+
+005) MFT-12948 / APAR IT40165  commit date:  08 Mar 2022
+--------------------------------------------------------
+     After installation of CDU on AIX servers, a strings process keeps on
+     running and consuming high CPU.
+
+006) CDUA-3231  commit date:  16 Mar 2022
+-----------------------------------------
+     Connect Direct Automated installation does not detect Integrated File Agent
+     start up. With this change if fileAgentEnable is set to yes and Integrated
+     File Agent is failed to start, Automated installation will fail.
+
+007) CDUA-3242 / APAR IT40322  commit date:  22 Mar 2022
+--------------------------------------------------------
+     If the backup procedure is invoked during an interactive upgrade
+     (cdinstall), it may fail indicating that tar cannot open the {CDU install
+     directory}.CDBCompressible.[gz|Z] and {CDU install
+     directory}.CDBUncompressible files due to permission. A restore procedure
+     invoked after this error will indicate no such file or directory regarding
+     the {CDU install directory}.CDBCompressible.[gz|Z] and {CDU install
+     directory}.CDBUncompressible files.
+
+008) CDUA-3303 / APAR IT40392  commit date:  24 Mar 2022
+--------------------------------------------------------
+     If a user exit program fails to execute, an appropriately named log file
+     is generated in {CDU install dir}/work/{CDU node name} directory, but
+     does not contain helpful information.
+
+009) CDUA-3308  commit date:  29 Mar 2022
+-----------------------------------------
+     Added Port Check Ignore List feature support.
+
+     NOTE:  Port Check Ignore feature is not supported for the API port on
+            HP-UX and Solaris platforms.
+
+-----------------------------------------------------------
+iFixes listed above are accumulated in C:D for UNIX 6.2.0.3
+-----------------------------------------------------------
+
+===========================================================
+iFixes listed below apply to C:D for UNIX 6.2.0.3
+===========================================================
+
+001) CDUA-2265  commit date:  04 Apr 2022
+-----------------------------------------
+     Removed syslog.logd initparm from default install as it is no longer used.
+
+002) CDUA-3324 / APAR IT40568  commit date:  08 Apr 2022
+--------------------------------------------------------
+     cdpmgr response time can be slowed if the TCQ becomes loaded with many
+     processes. This can result in significantly increased time needed to
+     execute processes and to accept incoming client or server connections.
+
+003) CDUA-3284  commit date:  12 Apr 2022
+-----------------------------------------
+     Inappropriate indication of lack of disk space due to failed diskfree execution.
+
+004) CDUA-3280  commit date:  12 Apr 2022
+-----------------------------------------
+     On RHEL 8 and SLES 15 systems, cdinstall_a execution may fail indicating
+     a command was not found referring to netstat.
+
+005) MFT-12913 / APAR IT40593  commit date:  15 Apr 2022
+--------------------------------------------------------
+     Some C:D Install Agent logs may be owned by root instead of the C:D
+     installer id.
+
+006) MFT-13054 / APAR IT40665  commit date:  18 Apr 2022
+--------------------------------------------------------
+     Add the silent installation parameter cdai_cliAuthkey=keystring to allow
+     users to override the default CLI authentication key.
+
+007) CDUA-3190  commit date:  18 Apr 2022
+-----------------------------------------
+     Removed cfg_convert script as it is not used anymore.
+
+008) CDUA-3348 / APAR IT40717  commit date:  03 May 2022
+--------------------------------------------------------
+     On some Linux systems, cfgcheck run by the cdcustrpt script may fail
+     indicating error while loading shared libraries: libtirpc.so.1.
+
+009) MFT-13197 / APAR IT40831  commit date:  04 May 2022
+--------------------------------------------------------
+     The NUIC record may not be logged into the C:D stats intermittently
+     on slower systems.
+
+010) CDUA-3339  commit date:  05 May 2022
+-----------------------------------------------------------------------
+     When an upgrade fails and rollback is triggerred, an extra failure
+     of Install Agent startup is seen in upgrade logs which might be confusing.
+     Fixed code to report only the appropriate upgrade failure error.
+
+011) CDUA-3369  commit date: 13 May 2022
+----------------------------------------
+     Updated Integrated File Agent to version 2.0.0.0_iFix023.  This update
+     includes the following fixes:
+
+     MFT-13005: Startup can take a long time before the first directory scan
+                gets started, especially when many directories are located on
+                slow or remote file systems.  Improved the method to resolve the
+                list of watched directories and also added a warning for
+                duplicate entries that will be ignored.
+
+     FLAG-267: Spring Boot references have been removed from Integrated File
+               Agent.
+
+     FLAG-266: The cdfastart/cdfastop/cdfapoll scripts fail on Linux PPC64LE
+               platforms due to a wrong JRE path.
+
+012) CDUA-3291  commit date:  10 May 2022
+-----------------------------------------
+     On HP-Itanium, silent installer changes the ownership of initparm.cfg file
+     to root.
+
+013) CDUA-3371  commit date:  10 May 2022
+-----------------------------------------
+     On silent installation when cdai_installFA and cdai_fileAgentEnable are set to yes,
+     Integrated File Agent is installed and started successfully, but some errors are
+     seen in the installation logs.
+
+014) CDUA-3316  commit date:  12 May 2022
+-----------------------------------------
+     CCD License Governance support has been added to CDU container.
+     The licensing metric for CDU container is Virtual Processor Core
+     (VPC).
+
+     Added Port Check Ignore List feature support in CDU containers
+
+015) CDUA-3338  commit date:  20 May 2022
+-----------------------------------------
+     cfgcheck tries to validate Integrated File Agent config file even when
+     Integrated File Agent is not installed.
+
+-----------------------------------------------------------
+iFixes listed above are accumulated in C:D for UNIX 6.2.0.4
+-----------------------------------------------------------
+
+===========================================================
+iFixes listed below apply to C:D for UNIX 6.2.0.4
+===========================================================
+
+001) CDUA-3415  commit date:  01 Jun 2022
+-----------------------------------------
+     Object Store tracing doesn't include process id number in the trace
+     stamp, making it difficult to read when concurrent copy steps are
+     occurring.
+
+002) CDUA-3439  commit date:  13 Jun 2022
+-----------------------------------------
+     Added an interactive uninstallation script for Connect:Direct for UNIX.
+
+003) MFT-13267 / APAR IT41201  commit date:  15 Jun 2022
+--------------------------------------------------------
+     Upgrade of Connect:Direct for UNIX from Control Center Director
+     may fail sometimes when standalone File Agent is running.
+
+004) MFT-13380 / APAR IT41245  commit date:  16 Jun 2022
+--------------------------------------------------------
+     Add new 'direct' (CLI) authentication trace parameter -a to
+     enable ndmauthc.log traces.
+
+005) MFT-13374 / APAR IT41284  commit date:  20 Jun 2022
+--------------------------------------------------------
+     Connect:Direct for UNIX uses zlib, which is vulnerable to the following
+     issue:
+
+     CVE-2018-25032: Zlib is vulnerable to a denial of service, caused by a
+                     memory corruption in the deflate operation. By using many
+                     distant matches, a remote attacker could exploit this
+                     vulnerability to cause the application to crash.
+
+006) MFT-13372 / APAR IT41296  commit date:  21 Jun 2022
+--------------------------------------------------------
+     IBM Connect:Direct for UNIX (CDU) on AIX, Linux, and Solaris platforms use
+     IBM(R) Runtime Environment Java(TM) (JRE) Version 8.0.6.30. This JRE
+     version is vulnerable to the following issues, disclosed as part of recent
+     IBM Java SDK updates:
+
+     CVE-2021-35550: An unspecified vulnerability in Java SE related to the JSSE
+                     component could allow an unauthenticated attacker to obtain
+                     sensitive information resulting in a high confidentiality
+                     impact using unknown attack vectors.
+
+     CVE-2021-35603: An unspecified vulnerability in Java SE related to the JSSE
+                     component could allow an unauthenticated attacker to obtain
+                     sensitive information resulting in a low confidentiality
+                     impact using unknown attack vectors.
+
+007) CDUA-3397  commit date:  21 Jun 2022
+--------------------------------------------------------
+     cdpmgr keeps on polling connect direct for file agent process even
+     though it is not installed.
+
+008) CDUA-3404  commit date:  25 Jun 2022
+-----------------------------------------
+     Added Port Check Ignore List feature support on Solaris.
+
+009) CDUA-3350  commit date:  06 Jul 2022
+-----------------------------------------
+     Silent upgrade fails when path field from ndm.path record in initparm.cfg
+     file is moved to the next line.
+
+010) CDUA-3486  commit date:  06 Jul 2022
+-----------------------------------------
+     High water mark value in SCNT record is significantly overstated in some
+     scenarios.
+
+011) MFT-13434 / APAR IT41491  commit date:  08 Jul 2022
+--------------------------------------------------------
+     A client connecting with a very long user name, for example, Control Center
+     authenticating with a certificate that has a very long domain name specified
+     in the certificate Common Name, may fail with Connect:Direct UNIX indicating
+     XUPC050I, Invalid USID value received from a client.
+
+012) CDUA-3485  commit date:  13 Jul 2022
+-----------------------------------------
+     When a command is issued from Connect:Direct Browser to delete a node
+     from netmap.cfg file, we get a success response even when the node does
+     not exist. Added a fix to show relevant error in such a case.
+
+013) CDUA-2945 / APAR IT40825  commit date:  15 Jul 2022
+--------------------------------------------------------
+     Temporary work files created in the deployment directory during an
+     automated install are not cleaned up.
+
+014) CDUA-3455  commit date:  19 Jul 2022
+-----------------------------------------
+     In CDU container, statistics report license issue with message id
+     XRIA001I with short text :&RECNAME=license:&FLDNAME=license.pvu:
+
+015) Accumulated IBM Certified Container updates  commit date:  02 Aug 2022
+---------------------------------------------------------------------------
+
+     Connect:Direct for UNIX container uses additional packages namely, cpio,
+     OpenSSL, ncurses over RedHat UBI 8.6, which are vulnerable to following
+     issues -
+
+     Update_01  MFT-13496 / APAR IT41516
+     -----------------------------------
+     CVE-2021-38185: GNU cpio through 2.13 allows attackers to execute arbitrary
+     code via a crafted pattern file, because of a dstring.c ds_fgetstr integer
+     overflow that triggers an out-of-bounds heap write. NOTE: it is unclear whether
+     there are common cases where the pattern file, associated with the -E option,
+     is untrusted data.
+
+     Update_02  MFT-13496 / APAR IT41641
+     -----------------------------------
+     CVE-2022-0778: OpenSSL is vulnerable to a denial of service, caused by a flaw
+     in the BN_mod_sqrt() function when parsing certificates. By using a
+     specially-crafted certificate with invalid explicit curve parameters, a remote
+     attacker could exploit this vulnerability to cause an infinite loop, and results
+     in a denial of service condition.
+
+     Update_03  MFT-13541 / APAR IT41640
+     -----------------------------------
+     CVE-2019-17595: GNU ncurses could allow a remote attacker to obtain sensitive
+     information, caused by a heap-based buffer over-read in the fmt_entry function
+     in tinfo/comp_hash.c in the terminfo library. By persuading a victim to open a
+     specially-crafted file, an attacker could exploit this vulnerability to obtain
+     sensitive information.
+
+     CVE-2019-17594: GNU ncurses could allow a remote attacker to obtain sensitive
+     information, caused by a heap-based buffer over-read in the _nc_find_entry
+     function in tinfo/comp_hash.c in the terminfo library. By persuading a victim
+     to open a specially-crafted file, an attacker could exploit this vulnerability
+     to obtain sensitive information.
+     file is moved to the next line.
+
+016) MFT-9996 / APAR IT27673  commit date 25 Jul 2022
+-----------------------------------------------------
+     A backup created when running the interactive script may incur
+     permission errors when writing to the installation directory's
+     parent folder. Instead, create the backup in the installation
+     directory.
+
+017) MFT-13244 / APAR IT40939  commit date:  29 Jul 2022
+--------------------------------------------------------
+     Statistics log messages may contain garbled text when referencing a value
+     that contains colon characters (:) or backslashes (\), such as a Windows
+     file name.
+
+018) Java component updates  commit date:  08 Dec 2022
+------------------------------------------------------
+     Update_01  MFT-13560 / APAR IT41681
+     -----------------------------------
+     The S3/non S3 Object Store, Install Agent and Integrated File Agent components,
+     included in IBM Sterling Connect:Direct for UNIX use versions of Apache Commons
+     Configuration that are vulnerable to the below listed issue.
+     Apache Commons Configuration has been upgraded to version 2.8.0 in Install Agent
+     and Integrated File Agent, and removed from S3/non S3 Object Store.
+
+     CVE-2022-33980: Apache Commons Configuration could allow a remote attacker to
+                     execute arbitrary code on the system, caused by a flaw when using
+                     the interpolation defaults. By using a specially-crafted configuratrion,
+                     an attacker could exploit this vulnerability to execute arbitrary code
+                     or perform unintentional contact with remote servers.
+
+     Update_02  MFT-13572 / APAR IT41709
+     -----------------------------------
+     The object store file IO exit and Integrated File Agent components,
+     included in IBM Sterling Connect:Direct for UNIX, use Google Gson version
+     2.5. This version is vulnerable to the following issue:
+
+     CVE-2022-25647: Google Gson is vulnerable to a denial of service, caused by
+                     the deserialization of untrusted data. By using the
+                     writeReplace() method, a remote attacker could exploit this
+                     vulnerability to cause a denial of service.
+
+     Update_03  MFT-13544 / APAR IT41659
+     -----------------------------------
+     Credentials for accessing an Amazon S3 object store may be specified in a
+     configuration file containing profiles. A profile may be configured to
+     provide temporary credentials via an IAM Role, specified with the role_arn
+     configuration file setting. CDU access to an S3 object store using such
+     temporary credentials fails with FIOX020E, indicating that the .sts.
+     service module is required to use assumed roles.
+
+     Update_04  FLAG-270
+     -------------------
+     cdfa scripts fail to execute on Solaris 10, indicating
+     IBM_JAVA_OPTIONS=-Dcom.ibm.tools.attach.enable=no: is not an identifier
+
+     Update_05  MFT-13524
+     --------------------
+     In some cases, a copy step to an object store, such as Amazon S3, may
+     generate error message FIOX021E, indicating IOExitFileWriter.write
+     failed, scheme=s3, error=java.lang.IllegalThreadStateException Thread is
+     already started.
+
+019) MFT-13594  commit date:  23 Aug 2022
+-----------------------------------------
+     Hashes, or checksums, were not available to validate CDU downloads from
+     IBM Fix Central.  Fix adds a new file to published fixes containing
+     SHA256 hashes of the fix download files.
+
+020) CDUA-3557 / APAR IT41867  commit date:  25 Aug 2022
+--------------------------------------------------------
+     Copy steps to an object store with checkpointing enabled may receive a
+     warning message, XCPK005W, indicating that checkpointing was disabled for
+     the copy step. The message did not indicate why checkpointing was
+     disabled.
+
+021) MFT-13381 / APAR IT41151  commit date:  26 Aug 2022
+--------------------------------------------------------
+     In some scenarios, a copy step may fail, indicating XSQF009I and XCPZ001I
+     messages when attempting to open a translation (xlate) table in the
+     default directory {C:D UNIX install dir}/ndm/xlate.
+
+022) Accumulated IBM Certified Container updates  commit date:  09 Sep 2022
+---------------------------------------------------------------------------
+
+     Update_01  CDUA-3590
+     --------------------
+     The CD keystore store password set by user is not set correctly in CDU
+     container. So, when trying to access the CD keystore, it will not allow
+     and give error and invalid/wrong password.
+
+     Connect:Direct for UNIX container uses OpenSSL package which is vulnerable to
+     following issues -
+
+     Update_02  MFT-13650 / APAR IT42007
+     -----------------------------------
+     CVE-2022-1292: The c_rehash script does not properly sanitise shell metacharacters
+                    to prevent command injection. This script is distributed by some
+                    operating systems in a manner where it is automatically executed.
+                    On such operating systems, an attacker could execute arbitrary
+                    commands with the privileges of the script. Use of the c_rehash
+                    script is considered obsolete and should be replaced by the OpenSSL
+                    rehash command line tool.
+
+     Update_03  MFT-13667 / APAR IT42009
+     -----------------------------------
+     CVE-2022-2068: OpenSSL could allow a remote attacker to execute arbitrary commands
+                    on the system, caused by improper validation of user-supplied input
+                    by the c_rehash script. By sending a specially-crafted request using
+                    shell metacharacters, an attacker could exploit this vulnerability
+                    to execute arbitrary commands with the privileges of the script on
+                    the system.
+
+     Update_04  MFT-13668 / APAR IT42008
+     -----------------------------------
+     CVE-2022-2097: AES OCB mode for 32-bit x86 platforms using the AES-NI assembly
+                    optimised implementation will not encrypt the entirety of the data
+                    under some circumstances. This could reveal sixteen bytes of data
+                    that was preexisting in the memory that wasn't written. In the special
+                    case of "in place" encryption, sixteen bytes of the plaintext would be
+                    revealed. Since OpenSSL does not support OCB based cipher suites for
+                    TLS and DTLS, they are both unaffected.
+
+023) MFT-13648 / APAR IT42013  commit date:  15 Sep 2022
+--------------------------------------------------------
+     In a rare scenario, a copy step to an object store may fail
+     inappropriately, indicating FIOX021E, "IOExitFileWriter.write failed,
+     scheme=s3, error=No data in buffer, length received {} bytes."
+
+024) CDUA-3492  commit date:  15 Sep 2022
+-----------------------------------------
+     Updated silent installation script to capture stderr output in the log
+     file for different system commands.
+
+025) MFT-13473 / APAR IT41488  commit date:  20 Sep 2022
+--------------------------------------------------------
+     A process submitted from the CLI may fail with a syntax message, XPAE003I,
+     if the process contains an snodeid or pnodeid parameter where one of the
+     elements, the password, for example, contains a C:D process special
+     character, such as an equals sign.
+
+     Fix adds the ability to enclose snodeid and pnodeid parameter elements in
+     single quotes, which will cause any C:D process special characters in these
+     elements to be ignored.
+
+026) MFT-13709 / APAR IT42148  commit date:  26 Sep 2022
+--------------------------------------------------------
+     If a process was submitted with a copy step that has datatype=binary in
+     the sysopts and blksize=0 in the dcb specs specified on the UNIX side,
+     ndmsmgr was terminated with a SIGFPE (Signal=8).
+
+027) CDUA-3225  commit date:  28 Sep 2022
+-----------------------------------------
+     While using Integrated File Agent, a CSPA204E message may be logged intermittently,
+     indicating "gsk_secure_soc_read() returned - GSK_ERROR_IO - An IO error occurred on
+     a data read or write".
+
+028) MFT-13747 / APAR IT42236  commit date:  10 Oct 2022
+--------------------------------------------------------
+     If non-standard symbolic links are implemented in the C:D UNIX
+     installation directory, cdcustrpt script may produce an error indicating
+     that grep could not locate initparm.cfg. Also, the report produced by
+     cdcustrpt will not display the C:D UNIX node name.
+
+029) MFT-13760 / APAR IT42267  commit date:  17 Oct 2022
+--------------------------------------------------------
+     After running for an extended time, C:D may become unresponsive or stop
+     executing. This issue may be accompanied by various messages, including
+     XUTL001I, indicating malloc failure in the stat logs, or XPMD002I,
+     indicating Fork() for cmgr/smgr child failed.
+
+030) CDUA-3549  commit date:  25 Oct 2022
+-----------------------------------------
+     In latest OCP 4.10 or K8s 1.23, when hostname or fully qulified domain name
+     is specified instead of IP for S3 object or CDU node outside the cluster in
+     netmap.cfg or in process. Then due to port restriction in network policy
+     for egress, DNS resolution does not work and CDU container cannot establish
+     connection outside the cluster. Thus file transfer fails in these scanarios.
+
+031) CDUA-3650  commit date:  26 Oct 2022
+-----------------------------------------
+     CDU container deployment support on root squash NFS has been added. It would
+     be fresh installation.
+
+     Note: For deployment on root squash NFS storage, a fresh installation should
+           be done.
+           Previously running workloads on non-root squash NFS should be upgraded
+           in non-root squash NFS only.
+
+-----------------------------------------------------------
+iFixes listed above are accumulated in C:D for UNIX 6.2.0.5
+-----------------------------------------------------------
+
+===========================================================
+iFixes listed below apply to C:D for UNIX 6.2.0.5
+===========================================================
+
+001) MFT-13797 / APAR IT42390  commit date:  03 Nov 2022
+--------------------------------------------------------
+     When the trusted.addr parameter of the port.check record in initparm.cfg is
+     populated, and there are many concurrent incoming connections, XIPT022I
+     messages may be observed. After some time, cdpmgr may also become
+     unresponsive. When this issue occurs, CLI connections will fail with
+     XAPI005I message indicated, and remote node connections will fail with
+     XIPT016I message indicated. Stat logs will contain a series of XPMD005I
+     messages. If C:D ports are being probed from a configured trusted address
+     by a health checker of some sort, a load balancer probe, for example, a
+     repeating series of XIPT007I/XPMC002I messages may also be seen.
+
+002) CDUA-3620 commit date:  03 Nov 2022
+----------------------------------------
+     On Solaris 10, cdcustrpt execution fails, indicating "test: argument expected".
+
+003) CDUA-3548  commit date:  07 Nov 2022
+-----------------------------------------
+     When a process is submitted with mail notification, the sender comes as
+     root user in mail notification instead of real user who has submitted the
+     process.
+
+004) Java Component Updates  commit date:  08 Nov 2022
+------------------------------------------------------
+     Update_01 MFT-13784 / APAR IT42354
+     ----------------------------------
+     The Install Agent and File Agent components, included in IBM Sterling
+     Connect:Direct for UNIX use versions of Apache Commons Text that are
+     vulnerable to the below listed issue.  Apache Commons Text has been upgraded
+     to version 1.10.0.
+
+     CVE-2022-42889: Apache Commons Text could allow a remote attacker to execute
+                     arbitrary code on the system, caused by an insecure
+                     interpolation defaults flaw. By sending a specially-crafted
+                     input, an attacker could exploit this vulnerability to execute
+                     arbitrary code on the system.
+
+     Update_02 FLAG-276
+     ------------------
+     Connect:Direct Web Services needs Spring Boot Components from FileAgentCFG.
+     Re-Injected Spring Boot @Component annotation.
+
+005) MFT-13829 / APAR IT42423  commit date:  10 Nov 2022
+--------------------------------------------------------
+     When the remote submitter name in an Snode session starts with the
+     '@' character, security authentication fails with error XSMG242I.
+
+006) MFT-13708 / APAR IT42331  commit date:  14 Nov 2022
+--------------------------------------------------------
+     When a client such as Control Center or C:D Web Services encountered a
+     problem attempting to update a configuration file, the error reporting
+     was incomplete.  Fix adds two new messages to the message file, XNMP013E
+     and XCFG001E, which provide more complete information about configuration
+     file update errors.
+
+007) MFT-13630 / APAR IT42170  commit date:  17 Nov 2022
+--------------------------------------------------------
+     Added support of silent upgrade of CDU if only server is installed before
+     upgrade. As a part of the silent upgrade process, client will be added to
+     CDU installation.
+
+008) MFT-13523 / APAR IT42233  commit date:  18 Nov 2022
+--------------------------------------------------------
+     On AIX, in some scenarios, temporary files for file transfer may be created
+     on a wrong path, leading to failure of file transfers when SPE feature is enabled.
+
+009) CDUA-3635  commit date:  22 Nov 2022
+-----------------------------------------
+     In some scenarios, a duplicate file.ioexit record may be added in
+     initparm.cfg file after an interactive upgrade.
+
+010) CDUA-3283	commit date:  09 Dec 2022
+-----------------------------------------
+     /tmp/.com_ibm_tools_attach directory may be created when a process is submitted
+     with a copy step that refers to a file.ioexit record to invoke an object store provider.
+
+011) Java Component Updates  commit date:  08 Dec 2022
+------------------------------------------------------
+     Update_01 MFT-13785 / APAR IT42426
+     ----------------------------------
+     The object store file IO exit and Integrated File Agent components,
+     included in IBM Sterling Connect:Direct for UNIX, use FasterXML jackson-
+     databind version 2.13.3. This version is vulnerable to the following issue:
+
+     CVE-2022-42003: In FasterXML jackson-databind before 2.14.0-rc1, resource
+                     exhaustion can occur because of a lack of a check in
+                     primitive value deserializers to avoid deep wrapper array
+                     nesting, when the UNWRAP_SINGLE_VALUE_ARRAYS feature is
+                     enabled.
+
+     Update_02 MFT-13786 / APAR IT42427
+     ----------------------------------
+     The object store file IO exit and Integrated File Agent components,
+     included in IBM Sterling Connect:Direct for UNIX, use FasterXML jackson-
+     databind version 2.13.3. This version is vulnerable to the following issue:
+
+     CVE-2022-42004: In FasterXML jackson-databind before 2.13.4, resource
+                     exhaustion can occur because of a lack of a check in
+                     BeanDeserializer._deserializeFromArray to prevent use of
+                     deeply nested arrays. An application is vulnerable only
+                     with certain customized choices for deserialization.
+
+     Update_03 MFT-13860 / APAR IT42659
+     ----------------------------------
+     Incorrectly formatted CDU sysopts parameter generated inappropriate
+     FIOX044E attempting to write to an object store.  Fix changes object
+     store service error to a warning instead.
+
+012) MFT-13886 / APAR IT42658  commit date:  13 Dec 2022
+--------------------------------------------------------
+     A user security failure may result in the submitter user@node to be reported
+     incorrectly in the application statistics.
+
+013) MFT-13892 / APAR IT42710  commit date:  13 Dec 2022
+--------------------------------------------------------
+     Following an install of CD Unix on AIX, a 'tr' process is left running,
+     consuming CPU resources.
+
+014) CDUA-3789  commit date:  25 Jan 2023
+-----------------------------------------
+     For large file transfers, progress bar on Connect:Direct Web Services does not
+     show the correct progress status.
+
+015) CDUA-3721  commit date:  06 Jan 2023
+-----------------------------------------
+     API connections attempted with a user whose password contains a '|' or '"'
+     character may fail and generate XCMM038I and XIDC001I messages.
+
+016) MFT-13990 / APAR IT42946  commit date:  23 Jan 2023
+--------------------------------------------------------
+     Automated install (cdinstall_a) with cdai_adminUserid=root specified
+     fails with CDAI104E. When interactive install (cdinstall) is run as root,
+     Secure+ initialization fails.
+
+     Caution: While installation as root is allowed, it is discouraged due to
+              security considerations.
+
+017) MFT-13959 / APAR IT42995  commit date: 30 Jan 2023
+-------------------------------------------------------
+     When Control Center and Connect:Direct for UNIX server are installed on the
+     same system, then a restart of server from Control Center may not work correctly,
+     reporting the unavailability of client port due to some other servers connected
+     to Control Center, which are using the same port number.
+
+018) MFT-14007 / APAR IT43023  commit date:  31 Jan 2023
+--------------------------------------------------------
+     The Object Store and Integrated File Agent components, included in IBM
+     Sterling Connect:Direct for UNIX, use netty-codec-http version 4.1.84. This
+     version is affected by the following issue:
+
+     CVE-2022-41915: Netty is vulnerable to HTTP response splitting attacks,
+                     caused by a flaw when calling DefaultHttpHeaders.set with
+                     an iterator of values. A remote attacker could exploit this
+                     vulnerability to inject arbitrary HTTP/1.1 response header
+                     in some form and cause the server to return a split
+                     response, once the URL is clicked. This would allow the
+                     attacker to perform further attacks, such as Web cache
+                     poisoning or cross-site scripting, and possibly obtain
+                     sensitive information.
+
+019) MFT-13915 / APAR IT43032  commit date: 01 Feb 2023
+-------------------------------------------------------
+     Emergency Restore from Control Center Director does not work after upgrading
+     to a recent version of Connect:Direct for UNIX, due to a date time format issue.
+
+020) MFT-13962 / APAR IT43046  commit date: 02 Feb 2023
+-------------------------------------------------------
+     The Install Agent component, included in IBM Sterling Connect:Direct for UNIX,
+     uses FasterXML jackson-databind version 2.13.3. This version is vulnerable to
+     the following issue:
+
+     CVE-2022-42003: In FasterXML jackson-databind before 2.14.0-rc1, resource
+		     exhaustion can occur because of a lack of a check in primitive
+		     value deserializers to avoid deep wrapper array nesting, when
+		     the UNWRAP_SINGLE_VALUE_ARRAYS feature is enabled.
+
+021) MFT-14043 / APAR IT43024  commit date: 06 Feb 2023
+-------------------------------------------------------
+     Update_01
+     ---------
+     IBM Connect:Direct for UNIX (CDU) on AIX, Linux, and Solaris platforms use
+     IBM(R) Runtime Environment Java(TM) (JRE) Version 8.0.7.10. This JRE version
+     is vulnerable to the following issue, disclosed as part of recent IBM Java
+     SDK updates:
+
+     CVE-2022-21626: An unspecified vulnerability in Java SE related to the Security
+		     component could allow an unauthenticated attacker to cause a
+		     denial of service resulting in a low availability impact using
+		     unknown attack vectors.
+
+     Update_02
+     ---------
+     CDU on HP-UX platform uses JRE Version 8.0.6.30. This JRE version is vulnerable
+     to the following issue, disclosed as part of recent IBM Java SDK updates:
+
+     CVE-2021-35550: An unspecified vulnerability in Java SE related to the JSSE
+		     component could allow an unauthenticated attacker to obtain
+		     sensitive information resulting in a high confidentiality impact
+		     using unknown attack vectors.
+
+     CVE-2021-35603: An unspecified vulnerability in Java SE related to the JSSE
+                     component could allow an unauthenticated attacker to obtain
+                     sensitive information resulting in a low confidentiality
+                     impact using unknown attack vectors.
+
+022) CDUA-4004  commit date:  20 Feb 2023
+-----------------------------------------
+     Recertified IBM Connect Direct for Unix Container Software in 2023.
+     Updated the base image to latest UBI image.
+
+-----------------------------------------------------------
+iFixes listed above are accumulated in C:D for UNIX 6.2.0.6
+-----------------------------------------------------------
+
+===========================================================
+iFixes listed below apply to C:D for UNIX 6.2.0.6
+===========================================================
+
+001) MFT-14110 / APAR IT43240  commit date:  28 Feb 2023
+--------------------------------------------------------
+     If a non-executable stats.exit.program is coded in initparm.cfg, for
+     example, specifying a non-existent file, many XSTL011E messages are
+     logged, and CDU performance is significantly decreased.
+
+002) CDUA-3598  commit date: 02 Mar 2023
+-----------------------------------------
+     The XCMM042I message is logged when a client signs in successfully. It shows who logged
+     in, but not the type of client or the remote address:
+
+003) MFT-14056 / APAR IT43263  commit date:  23 Mar 2023
+--------------------------------------------------------
+     When any of the partner nodes of Connect Direct for UNIX has
+     ostype=OS/390 specified in netmap.cfg file, XRIA002I error messages
+     are generated in the statistics for every login to this node from
+     Connect Direct Web Services.
+
+004) CDUA-4026  commit date: 14 Mar 2023
+----------------------------------------
+     The Health Check trusted address feature doesn't work in CDU container deployed
+     on Red Hat OpenShift cluster. Now, any non-CD connection attempt to a container
+     node will be ignored without enabling this feature. This will avoid unwanted
+     statistics records being created due to health check probes of Load Balancers.
+
+005) MFT-13017 / APAR IT42110  commit date:  17 Mar 2023
+--------------------------------------------------------
+     A text transfer between two C:D Unix nodes, using standard compression,
+     may result in a corrupted destination file.
+
+006) Java component updates  commit date: 28 Mar 2023
+-----------------------------------------------------
+     Update_01  CDUA-4089
+     --------------------
+     The Object Store and Integrated File Agent components, included in IBM
+     Sterling Connect:Direct for UNIX, use gax-httpjson version 0.104.4,
+     google-http-client-gson version 1.42.2 and jackson-core version 2.14.0.
+     These packages have following issue:
+     
+     CVE-2022-45688: A stack overflow in the XML.toJSONObject component of 
+                     hutool-json v5.8.10 allows attackers to cause a Denial 
+                     of Service (DoS) via crafted JSON or XML data. 
+
+     Update_02  MFT-14295
+     --------------------
+     The Integrated File Agent component, included in IBM Sterling
+     Connect:Direct for UNIX, used SnakeYAML 1.33. This version is affected by
+     the issue below.  Integrated File Agent removed dependency on SnakeYAML.
+
+     CVE-2022-1471: SnakeYaml could allow a remote authenticated attacker to
+                    execute arbitrary code on the system, caused by an unsafe
+                    deserialization in the Constructor class. By using a
+                    specially-crafted yaml content, an attacker could exploit
+                    this vulnerability to execute arbitrary code on the system.
+
+007) MFT-13876 / APAR IT43467  commit date:  30 Mar 2023
+--------------------------------------------------------
+     If a copy step with an object store reference on the source side fails 
+     with FIOX043E, any subsequent process piggy-backed onto the session that 
+     attempts to reference an object store on the source side fails abruptly 
+     and causes the JRE handling the object store to dump core.
+
+008) CDUA-4129  commit date: 10 Apr 2023
+----------------------------------------
+     Initparm parameter 'instance.id' is mandatory for s3 file transfer but
+     is not used and generates an exception message when empty. Error message
+     now changed to a warning which would allow a process to continue without
+     exception.
+
+009) FLAG-287   commit date: 10 Apr 2023
+----------------------------------------
+     Integrated File Agent component included in IBM Connect:Direct for UNIX
+     uses spring-expressions which is vulnerable to the following issue.
+     Removed spring-expression from Integrated File Agent.
+
+     CVE-2023-20861: Spring Framework vulnerable to denial of service via
+		     specially crafted SpEL expression.
+
+010) MFT-14104 / APAR IT43529  commit date:  11 Apr 2023
+--------------------------------------------------------
+     When a client or server connects to cdpmgr, cdpmgr executes the appropriate 
+     manager, ndmcmgr or ndmsmgr, to handle the incoming connection. If a 
+     manager fails to execute for some reason, for example, a required system 
+     library is missing, no information about the execution failure is logged. 
+
+     Fix adds a new message, XPMD009I, with information about the execution 
+     failure.
+
+011) CDWA-2867  commit date:  19 Apr 2023
+-----------------------------------------
+     Secure+ Admin tool has been updated to display a self-signed keycert
+     in both the Key Certificate and Trusted Certificate tabs in the
+     Certificate viewer.
+
+012) MFT-14139 / APAR IT43391  commit date:  21 Apr 2023
+--------------------------------------------------------
+     In a Connect:Direct installation, some files inside etc directory namely *flst1.0
+     are created with world writable permissions, which may be viewed by some as a
+     security concern. Connect Direct works fine even without the world writable
+     permissions for these files. Updated the permissions of these files to avoid
+     giving write permissions for everyone.
+
+013) Integrared File Agent component updates  commit date:  01 May 2023
+-----------------------------------------------------------------------
+
+     Update_01  MFT-14291 / APAR IT43598 / CVE-2023-20860, CVE-2023-20861
+     --------------------------------------------------------------------
+     Vulnerabilities found in Spring Framework affect Integrated File Agent.
+
+     Update_02  CDUA-4182 / APAR IT43670
+     -----------------------------------
+     Attempts to update configuration on AIX from C:D Web Services UI may fail 
+     and report XCMM076I.
+
+     Update_03  MFT-14254
+     --------------------
+     Match criteria for Watch Directory (WATCH_FILEPATH) does not match for 
+     Object Store path.
+
+     Update_04  FLAG-292
+     -------------------
+     Submit of a statistics command fails when process number is greater than 
+     999.
+
+014) MFT-14175 / APAR IT43715  commit date:  09 May 2023
+--------------------------------------------------------
+     In a Connect:Direct for UNIX installation, if the Install Agent scripts point
+     to a symbolic link of the actual installation path and the link is owned by root,
+     commands issued from Control Center Director, like stop and upgrade, may fail
+     as the stop script attempts to stop Connect Direct with root user instead of
+     admin user.
+
+015) MFT-14244 / APAR IT43732  commit date:  11 May 2023
+--------------------------------------------------------
+     IBM Connect:Direct for UNIX (CDU) on AIX, Linux, and Solaris platforms use
+     IBM(R) Runtime Environment Java(TM) (JRE) Version 8.0.7.20. This JRE
+     version is affected by the following issues, dislosed as part of recent IBM
+     Java SDK updates: CVE-2023-21830, CVE-2023-21843, and CVE-2022-21426.
+
+     CDU on HP-UX platform uses JRE Version 8.0.7.10. This JRE version is
+     affected by the following issue:  CVE-2023-30441. This JRE version is
+     vulnerable to the following issue, disclosed as part of recent IBM Java SDK
+     updates:  CVE-2022-21626.
+
