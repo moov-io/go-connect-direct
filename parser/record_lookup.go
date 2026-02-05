@@ -84,5 +84,8 @@ var (
 		"TRON":  TraceOn,
 		"TROFF": TraceOff,
 		"USEC":  UserSecurity,
+
+		// warnings
+		"XCPK": CheckpointingDisabled,
 	}
 )

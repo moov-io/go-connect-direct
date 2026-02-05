@@ -377,4 +377,22 @@ var (
 		Category:    CategoryProcess,
 		Description: "User security",
 	}
+
+	// Warnings
+
+	// CheckpointingDisabled
+	//
+	// 020) CDUA-3557 / APAR IT41867  commit date:  25 Aug 2022
+	// --------------------------------------------------------
+	// Copy steps to an object store with checkpointing enabled may receive a
+	// warning message, XCPK005W, indicating that checkpointing was disabled for
+	// the copy step. The message did not indicate why checkpointing was
+	// disabled.
+	//
+	// Source: https://delivery04.dhe.ibm.com/sar/CMA/OSA/0beu4/0/6.2.0.6.iFix015FixList.txt
+	CheckpointingDisabled = RecordID{
+		ID:          "XCPK",
+		Category:    CategoryProcess,
+		Description: "Checkpointing was disabled for the copy step",
+	}
 )

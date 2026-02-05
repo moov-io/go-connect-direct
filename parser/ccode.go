@@ -18,7 +18,7 @@ func (ss SummaryStats) ByCode(code int) []SummaryStat {
 			out = append(out, ss.Stats[i])
 		}
 	}
-	return nil
+	return out
 }
 
 type SummaryStat struct {
