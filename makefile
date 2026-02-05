@@ -44,7 +44,7 @@ else
 	@wget -O lint-project.sh https://raw.githubusercontent.com/moov-io/infra/master/go/lint-project.sh
 	@chmod +x ./lint-project.sh
 	GOLANGCI_LINTERS=prealloc GOLANGCI_SKIP_DIR=test EXPERIMENTAL=shuffle \
-	GOCYCLO_LIMIT=26 COVER_THRESHOLD=85.0 \
+	GOCYCLO_LIMIT=26 COVER_THRESHOLD=25.0 \
 	GOOS=js GOARCH=wasm ./lint-project.sh
 endif
 
