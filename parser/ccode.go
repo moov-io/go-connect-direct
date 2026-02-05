@@ -11,6 +11,16 @@ type SummaryStats struct {
 	Stats []SummaryStat
 }
 
+func (ss SummaryStats) ByCode(code int) []SummaryStat {
+	var out []SummaryStat
+	for i := range ss.Stats {
+		if ss.Stats[i].Code == code {
+			out = append(out, ss.Stats[i])
+		}
+	}
+	return nil
+}
+
 type SummaryStat struct {
 	ID            RecordID
 	Date          time.Time
@@ -19,6 +29,13 @@ type SummaryStat struct {
 	Code          int
 	MessageID     string
 }
+
+var (
+	CompletionCodeSuccess           = 0
+	CompletionCodeWarning           = 4
+	CompletionCodeError             = 8
+	CompletionCodeCatastrophicError = 16
+)
 
 func ParseCCode(input string) (SummaryStats, error) {
 	var out SummaryStats
